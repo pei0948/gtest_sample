@@ -124,9 +124,40 @@ int _tmain(int argc, _TCHAR* argv[])
 参考 [AndroidGTestRunner](https://github.com/paleozogt/AndroidGTestRunner)
 
 ## 3. gmock 使用
+- mock 主要使用了动态多态的特性
+- 将 mock 类继承要 mock 的类，将 mock 类的实例 set 进入要测试的方法中。测试方法中实例调用对应的方法时，获得的结果则是 mock 后的结果
+
+```
+int Calculator::Add(const int num1, const int num2) {
+    return _addSptr->Add(num1, num2);
+}  
+```
+
+```
+#include "add.h"
+#include <gmock/gmock.h>
+
+class MockAdder : public Adder {
+public:
+    MOCK_METHOD2(Add, int(const int, const int));
+};
+```
+
+```
+TEST_F(CalculatorTest, MockAdd) {
+   std::shared_ptr<MockAdder> mockAddSptr = std::make_shared<MockAdder>();
+   EXPECT_CALL(*mockAddSptr, Add(1, 2)) 
+        .Times(1)    //! 期望被调 1 次
+        .WillOnce(testing::Return(2));   //! 返回值为5
+   CalculatorTest::GetCalculatorInstanceSptr()->SetAddSptr(mockAddSptr);
+
+   EXPECT_NE(CalculatorTest::GetCalculatorInstanceSptr()->Add(1, 2), 3); 
+}
+```
 
 ## 4. 相关链接
 - [GoogleTest](https://github.com/google/googletest)
 - [AndroidGTestRunner](https://github.com/paleozogt/AndroidGTestRunner)
 - [单元测试gtest的安装与使用方法](https://blog.csdn.net/Jacksqh/article/details/129805462)
 - [gtest系列(一) | 断言(Assertion)](https://zhuanlan.zhihu.com/p/269351365)
+- [googletest-gmock使用示例](https://zhuanlan.zhihu.com/p/101906555)

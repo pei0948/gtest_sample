@@ -55,5 +55,5 @@ bazel run :main
 
 ### bazel 运行 gtest
 ```
-bazel test ...
+bazel test --test_output=all ...
 ```
