@@ -37,12 +37,22 @@ cc_binary(
     ],
 )
 
+cc_library(
+    name = "add_mock",
+    hdrs = ["add_mock.h"],
+    deps = [
+        "//:add",
+        "@googletest//:gtest",
+    ],
+)
+
 cc_test(
     name = "calculator_test",
     srcs = ["calculator_test.cpp"],
     deps = [
         "//:calculator_test_fixture",
-        "@googletest//:gtest_main",
+        "//:add_mock",
+        "@googletest//:gtest",
     ],
 )
 
