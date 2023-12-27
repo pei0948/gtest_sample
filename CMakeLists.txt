@@ -14,8 +14,8 @@ find_package(GTest REQUIRED)
 
 enable_testing()
 
-# 链接 gtest 库
-target_link_libraries(CalculatorTests ${GTEST_BOTH_LIBRARIES})
+# 链接 gtest gmock 
+target_link_libraries(CalculatorTests gmock gtest gtest_main pthread)
 
 # 添加测试
 gtest_discover_tests(CalculatorTests)
