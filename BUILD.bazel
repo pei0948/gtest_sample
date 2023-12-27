@@ -9,11 +9,21 @@ cc_library(
 )
 
 cc_library(
-    name = "addtest_fixture",
-    srcs = ["addtest_fixture.cpp"],
-    hdrs = ["addtest_fixture.h"],
+    name = "calculator",
+    srcs = ["calculator.cpp"],
+    hdrs = ["calculator.h"],
+    deps = [ 
+        "//:add",
+    ],  
+)
+
+cc_library(
+    name = "calculator_test_fixture",
+    srcs = ["calculator_test_fixture.cpp"],
+    hdrs = ["calculator_test_fixture.h"],
     deps = [
         "//:add",
+        "//:calculator",
         "@googletest//:gtest_main",
     ],
 )
@@ -23,14 +33,15 @@ cc_binary(
     srcs = ["main.cpp"],
     deps = [
         "//:add",
+        "//:calculator",
     ],
 )
 
 cc_test(
-    name = "add_test",
-    srcs = ["add_test.cpp"],
+    name = "calculator_test",
+    srcs = ["calculator_test.cpp"],
     deps = [
-        "//:addtest_fixture",
+        "//:calculator_test_fixture",
         "@googletest//:gtest_main",
     ],
 )

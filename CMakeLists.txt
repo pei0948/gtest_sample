@@ -4,18 +4,19 @@ cmake_minimum_required(VERSION 3.12)
 project(HelloGTest)
 
 # 添加可执行文件，指定测试文件和源文件
-add_executable(AddTests 
-              add_test.cpp 
+add_executable(CalculatorTests 
+              calculator_test.cpp 
               add.cpp
-              addtest_fixture.cpp)
+              calculator_test_fixture.cpp
+              calculator.cpp)
 
 find_package(GTest REQUIRED)
 
 enable_testing()
 
 # 链接 gtest 库
-target_link_libraries(AddTests ${GTEST_BOTH_LIBRARIES})
+target_link_libraries(CalculatorTests ${GTEST_BOTH_LIBRARIES})
 
 # 添加测试
-gtest_discover_tests(AddTests)
+gtest_discover_tests(CalculatorTests)
 

@@ -1,4 +1,6 @@
-class Add {
+#pragma once
+
+class Adder {
 public:
-	int add(const int num1, const int num2);
+	virtual int Add(const int num1, const int num2);
 };
