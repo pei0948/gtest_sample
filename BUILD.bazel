@@ -1,0 +1,37 @@
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+#指定该包对其他包可见
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "add",
+    srcs = ["add.cpp"],
+    hdrs = ["add.h"],
+)
+
+cc_library(
+    name = "addtest_fixture",
+    srcs = ["addtest_fixture.cpp"],
+    hdrs = ["addtest_fixture.h"],
+    deps = [
+        "//:add",
+        "@googletest//:gtest_main",
+    ],
+)
+
+cc_binary(
+    name = "main",
+    srcs = ["main.cpp"],
+    deps = [
+        "//:add",
+    ],
+)
+
+cc_test(
+    name = "add_test",
+    srcs = ["add_test.cpp"],
+    deps = [
+        "//:addtest_fixture",
+        "@googletest//:gtest_main",
+    ],
+)
+
