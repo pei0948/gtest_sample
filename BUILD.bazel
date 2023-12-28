@@ -46,12 +46,22 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "calculator_mock",
+    hdrs = ["calculator_mock.h"],
+    deps = [
+        "//:calculator",
+        "@googletest//:gtest",
+    ],
+)
+
 cc_test(
     name = "calculator_test",
     srcs = ["calculator_test.cpp"],
     deps = [
         "//:calculator_test_fixture",
         "//:add_mock",
+        "//:calculator_mock",
         "@googletest//:gtest",
     ],
 )
